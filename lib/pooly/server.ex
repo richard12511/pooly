@@ -10,6 +10,8 @@ defmodule Pooly.Server do
   end
 
   def checkout, do: GenServer.call(__MODULE__, :checkout)
+  def checkin(worker_pid), do: GenServer.cast(__MODULE__, {:checkin, worker_pid})
+  def status, do: GenServer.call(__MODULE__, :status)
 
   #server
   def init([sup, pool_config]) when is_pid(sup) do
@@ -31,6 +33,20 @@ defmodule Pooly.Server do
         monitor_ref = Process.monitor(from_pid)
         true = :ets.insert(monitors, {worker, monitor_ref})
         {:reply, worker, %{state | workers: rest}}
+    end
+  end
+
+  def handle_call(:status, _from, %{workers: workers, monitors: monitors} = state) do
+    {:reply, {length(workers), :ets.info(monitors, :size)}, state}
+  end
+
+  def handle_cast({:checkin, worker}, %{workers: workers, monitors: monitors} = state) do
+    case :ets.lookup(monitors, worker) do
+      [{pid, monitor_ref}] ->
+        true = Process.demonitor(monitor_ref)
+        true = :ets.delete(monitors, pid)
+        {:noreply, %{state | workers: [pid | workers]}}
+      [] -> {:noreply, state}
     end
   end
 
