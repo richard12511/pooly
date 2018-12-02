@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a1e322e-629f-4b29-81db-d7bb737c5f50" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/pooly/sample_worker.ex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pooly/server.ex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pooly/server.ex" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pooly/server.ex" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,8 +34,8 @@
       <file leaf-file-name="server.ex" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/pooly/server.ex">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+            <state relative-caret-position="425">
+              <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -135,12 +133,12 @@
       <updated>1543765083806</updated>
       <workItem from="1543765085012" duration="1387000" />
       <workItem from="1543766573894" duration="487000" />
-      <workItem from="1543767955041" duration="1909000" />
+      <workItem from="1543767955041" duration="2922000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3783000" />
+    <option name="totallyTimeSpent" value="4796000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="0" />
@@ -211,8 +209,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/pooly/server.ex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+        <state relative-caret-position="425">
+          <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
         </state>
       </provider>
     </entry>

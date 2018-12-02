@@ -9,14 +9,29 @@ defmodule Pooly.Server do
     GenServer.start_link(__MODULE__, [sup, pool_config], name: __MODULE__)
   end
 
+  def checkout, do: GenServer.call(__MODULE__, :checkout)
+
   #server
-  def init([sup, pool_config]) when is_pid(sup), do: init(pool_config, %State{sup: sup})
+  def init([sup, pool_config]) when is_pid(sup) do
+    monitors = :ets.insert(:monitors, [:private])
+    init(pool_config, %State{sup: sup, monitors: monitors})
+  end
+
   def init([{:mfa, mfa} | rest], state), do: init(rest, %{state | mfa: mfa})
   def init([{:size, size} | rest], state), do: init(rest, %{state | size: size})
   def init([_, rest], state), do: init(rest, state)
   def init([], state) do
     send(self(), :start_worker_supervisor)
     {:ok, state}
+  end
+
+  def handle_call(:checkout, {from_pid, _ref}, %{workers: workers, monitors: monitors} = state) do
+    case workers do
+      [worker | rest] ->
+        monitor_ref = Process.monitor(from_pid)
+        true = :ets.insert(monitors, {worker, monitor_ref})
+        {:reply, worker, %{state | workers: rest}}
+    end
   end
 
   def handle_info(:start_worker_supervisor, state = %{sup: sup, mfa: mfa, size: size}) do
