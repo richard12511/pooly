@@ -1,7 +1,9 @@
 defmodule Pooly.Server do
   use GenServer
+  import Supervisor.Spec
+
   defmodule State do
-    defstruct sup: nil, size: nil, mfa: nil
+    defstruct sup: nil, size: nil, mfa: nil, monitors: [], workers: []
   end
 
   #api
@@ -15,7 +17,7 @@ defmodule Pooly.Server do
 
   #server
   def init([sup, pool_config]) when is_pid(sup) do
-    monitors = :ets.insert(:monitors, [:private])
+    monitors = :ets.new(:monitors, [:private])
     init(pool_config, %State{sup: sup, monitors: monitors})
   end
 
@@ -53,14 +55,14 @@ defmodule Pooly.Server do
   def handle_info(:start_worker_supervisor, state = %{sup: sup, mfa: mfa, size: size}) do
     {:ok, worker_sup} = Supervisor.start_child(sup, supervisor_spec(mfa))
     workers = prepopulate(size, worker_sup)
-    {:noreply, %{state | worker_sup: worker_sup, workers: workers}}
+    {:noreply, %{state | sup: worker_sup, workers: workers}}
   end
 
   #private
   defp supervisor_spec(mfa), do: supervisor(Pooly.WorkerSupervisor, [mfa], [restart: :temporary])
 
   defp prepopulate(size, sup), do: prepopulate(size, sup, [])
-  defp prepopulate(size, sup, workers) when size < 1, do: workers
+  defp prepopulate(size, _sup, workers) when size < 1, do: workers
   defp prepopulate(size, sup, workers) do
     prepopulate(size - 1, sup, [new_worker(sup) | workers])
   end
