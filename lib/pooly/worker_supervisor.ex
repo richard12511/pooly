@@ -2,7 +2,7 @@ defmodule Pooly.WorkerSupervisor do
   use Supervisor
 
   #api
-  def start_link({_,_,_} = mfa), do: Supervisor.start_link(__MODULE__, mfa)
+  def start_link({_,_,_} = mfa), do: Supervisor.start_link(__MODULE__, mfa, name: __MODULE__)
 
   #server
   def init({m,f,a}) do
