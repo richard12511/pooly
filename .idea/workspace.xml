@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a1e322e-629f-4b29-81db-d7bb737c5f50" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/pooly/pool_server.ex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pooly/pool_supervisor.ex" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/pooly/pools_supervisor.ex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pooly/pooly.ex" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pooly/pooly.ex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/pooly/pool_server.ex" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pooly/pool_server.ex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pooly/server.ex" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pooly/server.ex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/pooly/supervisor.ex" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pooly/supervisor.ex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/pooly/worker_supervisor.ex" beforeDir="false" afterPath="$PROJECT_DIR$/lib/pooly/worker_supervisor.ex" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,32 +16,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="worker_supervisor.ex" pinned="false" current-in-tab="false">
+      <file leaf-file-name="worker_supervisor.ex" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/pooly/worker_supervisor.ex">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="sample_worker.ex" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/pooly/sample_worker.ex">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" selection-start-line="15" selection-start-column="1" selection-end-line="31" selection-end-column="4" />
+            <state relative-caret-position="170">
+              <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pool_server.ex" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/pooly/pool_server.ex">
+      <file leaf-file-name="server.ex" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/pooly/server.ex">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1309">
-              <caret line="77" selection-start-line="77" selection-end-line="79" selection-end-column="5" />
-              <folding>
-                <marker date="1543959645953" expanded="true" signature="0:4032" ph="..." />
-              </folding>
+            <state relative-caret-position="903">
+              <caret line="54" selection-start-line="54" selection-end-line="54" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pool_supervisor.ex" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pool_supervisor.ex" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/pooly/pool_supervisor.ex">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pools_supervisor.ex" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/pooly/pools_supervisor.ex">
+          <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret selection-end-line="11" selection-end-column="3" />
+              <caret selection-end-line="4" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -57,6 +64,7 @@
       <find>sup</find>
       <find>supervisor_spec</find>
       <find>terminate</find>
+      <find>new_worker</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -69,11 +77,11 @@
         <option value="$PROJECT_DIR$/lib/pooly/sample_worker.ex" />
         <option value="$PROJECT_DIR$/lib/pooly/pooly.ex" />
         <option value="$PROJECT_DIR$/lib/pooly/supervisor.ex" />
-        <option value="$PROJECT_DIR$/lib/pooly/server.ex" />
-        <option value="$PROJECT_DIR$/lib/pooly/pools_supervisor.ex" />
-        <option value="$PROJECT_DIR$/lib/pooly/worker_supervisor.ex" />
-        <option value="$PROJECT_DIR$/lib/pooly/pool_server.ex" />
         <option value="$PROJECT_DIR$/lib/pooly/pool_supervisor.ex" />
+        <option value="$PROJECT_DIR$/lib/pooly/pools_supervisor.ex" />
+        <option value="$PROJECT_DIR$/lib/pooly/server.ex" />
+        <option value="$PROJECT_DIR$/lib/pooly/pool_server.ex" />
+        <option value="$PROJECT_DIR$/lib/pooly/worker_supervisor.ex" />
       </list>
     </option>
   </component>
@@ -156,12 +164,12 @@
       <updated>1543765083806</updated>
       <workItem from="1543765085012" duration="1387000" />
       <workItem from="1543766573894" duration="487000" />
-      <workItem from="1543767955041" duration="29661000" />
+      <workItem from="1543767955041" duration="32125000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31535000" />
+    <option name="totallyTimeSpent" value="33999000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="0" />
@@ -228,13 +236,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/pooly/sample_worker.ex">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/pooly/pooly.ex">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -249,10 +250,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/pooly/server.ex">
+    <entry file="file://$PROJECT_DIR$/lib/pooly/pool_supervisor.ex">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="30" selection-end-column="3" />
+        <state relative-caret-position="238">
+          <caret line="14" column="17" lean-forward="true" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -263,29 +264,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/pooly/worker_supervisor.ex">
+    <entry file="file://$PROJECT_DIR$/lib/pooly/sample_worker.ex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" selection-start-line="15" selection-start-column="1" selection-end-line="31" selection-end-column="4" />
+        <state relative-caret-position="170">
+          <caret line="10" column="3" lean-forward="true" selection-start-line="10" selection-start-column="3" selection-end-line="10" selection-end-column="3" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/pooly/pool_server.ex">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1309">
-          <caret line="77" selection-start-line="77" selection-end-line="79" selection-end-column="5" />
+        <state relative-caret-position="629">
+          <caret line="387" column="41" lean-forward="true" selection-start-line="387" selection-start-column="41" selection-end-line="387" selection-end-column="41" />
           <folding>
-            <marker date="1543959645953" expanded="true" signature="0:4032" ph="..." />
+            <marker date="1543961922933" expanded="true" signature="1:4207" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/pooly/pool_supervisor.ex">
+    <entry file="file://$PROJECT_DIR$/lib/pooly/server.ex">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="11" selection-end-column="3" />
+        <state relative-caret-position="903">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/pooly/worker_supervisor.ex">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
   <component name="masterDetails">
