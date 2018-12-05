@@ -15,11 +15,20 @@ defmodule Pooly.Server do
   end
 
   def checkin(pool_name, worker_pid) do
-    GenServer.cast(:"#{pool_name}Server", {:checkin, worker_pid})
+    Pooly.PoolServer.checkin(pool_name, worker_pid)
+  end
+
+  def transaction(pool_name, fun, timeout) do
+    worker = checkout(pool_name, true, timeout)
+    try do
+      fun.(worker)
+    after
+      checkin(pool_name, worker)
+    end
   end
 
   def status(pool_name) do
-    GenServer.call(:"#{pool_name}Server", :status)
+    Pooly.PoolServer.status(pool_name)
   end
 
   #############
@@ -36,6 +45,7 @@ defmodule Pooly.Server do
 
   def handle_info({:start_pool, pool_config}, state) do
     {:ok, _pool_sup} = Supervisor.start_child(Pooly.PoolsSupervisor, supervisor_spec(pool_config))
+
     {:noreply, state}
   end
 
@@ -44,6 +54,8 @@ defmodule Pooly.Server do
   #####################
 
   defp supervisor_spec(pool_config) do
+    # TODO: WHAT SHOULD BE GOOD VALUES
+    # NOTE: This needs to be random because by de
     opts = [id: :"#{pool_config[:name]}Supervisor"]
     supervisor(Pooly.PoolSupervisor, [pool_config], opts)
   end
