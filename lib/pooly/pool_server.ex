@@ -3,7 +3,8 @@ defmodule Pooly.PoolServer do
   import Supervisor.Spec
 
   defmodule State do
-    defstruct pool_sup: nil, worker_sup: nil, monitors: nil, size: nil, workers: nil, name: nil, mfa: nil
+    defstruct pool_sup: nil, worker_sup: nil, monitors: nil, size: nil, workers: nil, name: nil, mfa: nil,
+    max_overflow: nil, overflow: nil, waiting: empty
   end
 
   def start_link(pool_sup, pool_config) do
@@ -48,6 +49,10 @@ defmodule Pooly.PoolServer do
     init(rest, %{state | size: size})
   end
 
+  def init([{:max_overflow, max_overflow}|rest], state) do
+    int(rest, %{state | max_overflow: max_overflow})
+  end
+
   def init([], state) do
     send(self(), :start_worker_supervisor)
     {:ok, state}
@@ -57,15 +62,22 @@ defmodule Pooly.PoolServer do
     init(rest, state)
   end
 
-  def handle_call(:checkout, {from_pid, _ref}, %{workers: workers, monitors: monitors} = state) do
+  def handle_call({:checkout, block}, {from_pid, _ref}, state) do
+    %{
+      worker_sup: worker_sup, workers: workers, monitors: monitors, overflow: overflow, max_overflow: max_overflow
+    } = state
+
     case workers do
       [worker|rest] ->
         ref = Process.monitor(from_pid)
         true = :ets.insert(monitors, {worker, ref})
         {:reply, worker, %{state | workers: rest}}
-
+      [] when max_overflow > 0 and overflow < max_overflow ->
+        {worker_pid, monitor_ref} = new_worker(worker_sup, from_pid)
+        true = :ets.insert(monitors, {worker_pid, monitor_ref})
+        {:reply, worker_pid, %{state | overflow: overflow + 1}}
       [] ->
-        {:reply, :noproc, state}
+        {:reply, :full, state}
     end
   end
 
@@ -78,7 +90,7 @@ defmodule Pooly.PoolServer do
       [{pid, ref}] ->
         true = Process.demonitor(ref)
         true = :ets.delete(monitors, pid)
-        {:noreply, %{state | workers: [pid|workers]}}
+        {:noreply, handle_checkin(pid, state)}
       [] ->
         {:noreply, state}
     end
@@ -141,8 +153,14 @@ defmodule Pooly.PoolServer do
 
   defp new_worker(sup) do
     {:ok, worker} = Supervisor.start_child(sup, [[]])
-    Process.link(worker)
+    true = Process.link(worker)
     worker
+  end
+
+  defp new_worker(sup, from_pid) do
+    pid = new_worker(sup)
+    monitor_ref = Process.monitor(from_pid)
+    {pid, monitor_ref}
   end
 
   defp supervisor_spec(name, mfa) do
@@ -150,6 +168,24 @@ defmodule Pooly.PoolServer do
     #       is started by the PoolServer.
     opts = [id: name <> "WorkerSupervisor", shutdown: 10000, restart: :temporary]
     supervisor(Pooly.WorkerSupervisor, [self(), mfa], opts)
+  end
+
+  defp handle_checkin(worker_pid, state) do
+    %{
+      worker_sup: worker_sup, workers: workers, monitors: monitors, overflow: overflow, max_overflow: max_overflow
+    } = state
+
+    if overflow > 0 do
+      :ok = dismiss_worker(worker_sup, worker_pid)
+      %{state | overflow: overflow - 1, waiting: empty}
+    else
+      %{state | overflow: 0, waiting: empty, workers: [worker_pid | workers]}
+    end
+  end
+
+  defp dismiss_worker(worker_sup, worker_pid) do
+    true = Process.unlink(worker_pid)
+    Supervisor.terminate_child(worker_sup, worker_pid)
   end
 
 end
